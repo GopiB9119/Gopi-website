@@ -1,0 +1,188 @@
+.subscribe {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.header-content {
+    position: relative;
+    display: inline-block;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+}
+
+.header-decoration {
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.star {
+    color: #ffd93d;
+    font-size: 1.5rem;
+    animation: twinkle 2s infinite;
+}
+
+.star:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.subscribe-content {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 1.1rem;
+    color: #ffd93d;
+    font-weight: 500;
+}
+
+.form-group input[type="email"] {
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="email"]:focus {
+    outline: none;
+    border-color: #ffd93d;
+    box-shadow: 0 0 0 2px rgba(255, 217, 61, 0.2);
+}
+
+.preferences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.preference-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.preference-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.preference-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #ffd93d;
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    color: #1a1a2e;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 217, 61, 0.3);
+}
+
+.success-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+.success-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.success-message h2 {
+    color: #ffd93d;
+    margin-bottom: 1rem;
+}
+
+.success-message p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 768px) {
+    .subscribe {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .subscribe-content {
+        padding: 1.5rem;
+    }
+
+    .preferences-grid {
+        grid-template-columns: 1fr;
+    }
+} 
