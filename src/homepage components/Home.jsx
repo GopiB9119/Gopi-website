@@ -1,13 +1,35 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import "./Home.css";
 
 const Home = () => {
     const currentYear = new Date().getFullYear();
     const [isHovered, setIsHovered] = useState(false);
+    const navigate = useNavigate();
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    const handleProfileClick = () => {
+        if (user) {
+            navigate('/profile');
+        } else {
+            navigate('/login');
+        }
+    };
 
     return (
         <div className="home">
+            {/* Floating Profile Button */}
+            <button
+                className="profile-fab"
+                onClick={handleProfileClick}
+                title={user ? 'Profile' : 'Login'}
+            >
+                <div className="profile-fab-avatar">
+                    {user?.email?.charAt(0).toUpperCase() || <span role="img" aria-label="profile">👤</span>}
+                </div>
+            </button>
             <div className="container">
                 <header className="title">
                     <h1>The Beauty of Dreams</h1>
@@ -84,23 +106,21 @@ const Home = () => {
 
             <div className="about1">
                 <footer>
-                    <p>
-                        &copy; Dream Journal {currentYear}
-                        <div className="footer-links">
-                            <Link to="/about" className="about-link">
-                                <span className="about-icon">✨</span>
-                                About Us
-                            </Link>
-                            <Link to="/join-community" className="about-link">
-                                <span className="about-icon">🤝</span>
-                                Join Community
-                            </Link>
-                            <Link to="/subscribe" className="about-link">
-                                <span className="about-icon">📬</span>
-                                Subscribe
-                            </Link>
-                        </div>
-                    </p>
+                    <p>&copy; Dream Journal {currentYear}</p>
+                    <div className="footer-links">
+                        <Link to="/about" className="about-link">
+                            <span className="about-icon">✨</span>
+                            About Us
+                        </Link>
+                        <Link to="/join-community" className="about-link">
+                            <span className="about-icon">🤝</span>
+                            Join Community
+                        </Link>
+                        <Link to="/subscribe" className="about-link">
+                            <span className="about-icon">📬</span>
+                            Subscribe
+                        </Link>
+                    </div>
                 </footer>
             </div>
         </div>

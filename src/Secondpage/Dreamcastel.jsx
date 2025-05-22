@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Dreamcastel.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const StoryCraft = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +10,9 @@ const StoryCraft = () => {
         storyType: "fantasy",
         date: new Date().toLocaleDateString()
     });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,32 +32,63 @@ const StoryCraft = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // Get existing stories from localStorage
-        const existingStories = JSON.parse(localStorage.getItem('stories') || '[]');
-        
-        // Add new story
-        const newStory = {
-            ...formData,
-            id: Date.now(), // Unique identifier
-            date: new Date().toLocaleDateString()
-        };
-        
-        // Save updated stories array
-        localStorage.setItem('stories', JSON.stringify([...existingStories, newStory]));
-        
-        // Reset form
-        setFormData({
-            chapterNumber: "",
-            title: "",
-            content: "",
-            storyType: "fantasy",
-            date: new Date().toLocaleDateString()
-        });
+        setError('');
+        setSuccess('');
 
-        alert("Your story has been saved successfully!");
+        try {
+            // Validate form data
+            if (!formData.chapterNumber || !formData.title || !formData.content) {
+                throw new Error('Please fill in all required fields');
+            }
+
+            // Get existing stories from localStorage
+            const existingStories = JSON.parse(localStorage.getItem('stories') || '[]');
+            
+            // Check if chapter number already exists
+            const chapterExists = existingStories.some(
+                story => story.chapterNumber === formData.chapterNumber
+            );
+
+            if (chapterExists) {
+                throw new Error('A story with this chapter number already exists');
+            }
+
+            // Create new story object
+            const newStory = {
+                ...formData,
+                id: Date.now(), // Unique identifier
+                date: new Date().toLocaleDateString(),
+                author: localStorage.getItem('userEmail') || 'Anonymous'
+            };
+            
+            // Save updated stories array
+            const updatedStories = [...existingStories, newStory];
+            localStorage.setItem('stories', JSON.stringify(updatedStories));
+
+            // Trigger storage event for other components
+            window.dispatchEvent(new Event('storage'));
+            
+            setSuccess('Your story has been saved successfully!');
+            
+            // Reset form
+            setFormData({
+                chapterNumber: "",
+                title: "",
+                content: "",
+                storyType: "fantasy",
+                date: new Date().toLocaleDateString()
+            });
+
+            // Navigate to CompanyStory after 2 seconds
+            setTimeout(() => {
+                navigate('/companystory');
+            }, 2000);
+
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
     return (
@@ -72,6 +106,9 @@ const StoryCraft = () => {
 
             <div className="story-form-container">
                 <form onSubmit={handleSubmit} className="story-form">
+                    {error && <div className="error-message">{error}</div>}
+                    {success && <div className="success-message">{success}</div>}
+
                     <div className="form-group">
                         <label htmlFor="chapterNumber">Chapter Number</label>
                         <input
@@ -129,9 +166,8 @@ const StoryCraft = () => {
                             placeholder="Write your story here..."
                         />
                     </div>
-
-                    <button type="submit" className="submit-btn">
-                        Save Story
+                    <button type="submit" className="submit-btn" onClick={() => navigate('/companystory')}>
+                        Save Story & View All Stories
                     </button>
                 </form>
 
