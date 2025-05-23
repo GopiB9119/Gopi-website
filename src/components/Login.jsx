@@ -63,13 +63,16 @@ const Login = () => {
       <div className="login-content">
         <div className="login-card">
           <div className="login-header">
-            <h1 className="login-title">Welcome Back</h1>
-            <p className="login-subtitle">Enter your credentials to continue your journey</p>
+            <div className="logo-container">
+              <span className="logo-icon">✨</span>
+              <h1 className="login-title">Dream Journal</h1>
+            </div>
+            <p className="login-subtitle">Your Personal Dream Diary</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" noValidate>
             <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
+              <label htmlFor="email" className="form-label">Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -79,6 +82,7 @@ const Login = () => {
                 placeholder="Enter your email"
                 autoComplete="email"
                 required
+                aria-label="Email Address"
               />
             </div>
 
@@ -93,15 +97,21 @@ const Login = () => {
                 placeholder="Enter your password"
                 autoComplete="current-password"
                 required
+                aria-label="Password"
               />
             </div>
 
-            {error && <div className="error-message">{error}</div>}
+            {error && (
+              <div className="error-message" role="alert">
+                {error}
+              </div>
+            )}
 
             <button 
               type="submit" 
               className={`login-button ${isLoading ? 'loading' : ''}`}
               disabled={isLoading}
+              aria-label={isLoading ? 'Signing in...' : 'Sign in'}
             >
               {isLoading ? (
                 <div className="loading-spinner" />
@@ -117,10 +127,16 @@ const Login = () => {
               <button 
                 onClick={() => navigate('/signup')} 
                 className="login-footer-link"
+                aria-label="Navigate to sign up page"
               >
                 Sign Up
               </button>
             </p>
+            <div className="login-links">
+              <a href="/privacy-policy" className="login-link">Privacy Policy</a>
+              <span className="link-separator">•</span>
+              <a href="/terms" className="login-link">Terms of Service</a>
+            </div>
           </div>
         </div>
       </div>

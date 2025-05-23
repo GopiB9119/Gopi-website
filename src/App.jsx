@@ -15,6 +15,9 @@ import Navigation from './components/Navigation'
 import SplashScreen from './components/SplashScreen'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './context/AuthContext'
+import PrivacyPolicy from './Secondpage/PrivacyPolicy'
+import TermsAndConditions from './Secondpage/TermsAndConditions'
+import ContactUs from './Secondpage/ContactUs'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -26,13 +29,13 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
+    <Router>
         {showSplash ? (
           <SplashScreen onComplete={handleSplashComplete} />
         ) : (
           <>
             <Navigation />
-            <Routes>
+      <Routes>
               <Route path="/" element={<Navigate to="/login" />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
@@ -52,7 +55,7 @@ function App() {
                   <Dreamcastel />
                 </ProtectedRoute>
               } />
-              <Route path='/about' element={<About />} />
+        <Route path='/about' element={<About />} />
               <Route path='/companystory' element={
                 <ProtectedRoute>
                   <CompanyStory />
@@ -68,10 +71,13 @@ function App() {
                   <Subscribe />
                 </ProtectedRoute>
               } />
-            </Routes>
+              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+              <Route path='/terms' element={<TermsAndConditions />} />
+              <Route path='/contact' element={<ContactUs />} />
+      </Routes>
           </>
         )}
-      </Router>
+    </Router>
     </AuthProvider>
   )
 }

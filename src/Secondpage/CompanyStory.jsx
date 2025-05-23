@@ -3,11 +3,19 @@ import "./CompanyStory.css";
 import comicPdf from "../assets/comic.pdf";
 
 const CompanyStory = ({ isCompanyUser }) => {
-    const [viewMode, setViewMode] = useState('story');
+    const [viewMode, setViewMode] = useState(() => {
+        // Initialize viewMode from localStorage or default to 'story'
+        return localStorage.getItem('viewMode') || 'story';
+    });
     const [stories, setStories] = useState([]);
     const [selectedStory, setSelectedStory] = useState(null);
     const [sortOrder, setSortOrder] = useState('newest');
     const [timeFilter, setTimeFilter] = useState('all'); // 'all' or 'yesterday'
+
+    // Save viewMode to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('viewMode', viewMode);
+    }, [viewMode]);
 
     useEffect(() => {
         const loadStories = () => {

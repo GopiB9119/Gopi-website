@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+Disallow: /edit-profile
+
+Sitemap: https://story-93958.web.app/sitemap.xml 
